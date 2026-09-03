@@ -12,6 +12,7 @@ export const bands: Band[] = [
       {
         name: "Bryce Savage",
         role: "Vocal / Producer",
+        image: "/images/bands/mamber/bryce-savage.jpg",
       },
     ],
   },
@@ -27,18 +28,22 @@ export const bands: Band[] = [
       {
         name: "Dan Reynolds",
         role: "Vocal",
+        image: "/images/bands/mamber/dan-reynolds.jpg",
       },
       {
         name: "Wayne Sermon",
         role: "Guitar",
+        image: "/images/bands/mamber/wayne-sermon.jpg",
       },
       {
         name: "Ben McKee",
         role: "Bass",
+        image: "/images/bands/mamber/ben-mckee.jpg",
       },
       {
         name: "Daniel Platzman",
         role: "Drums",
+        image: "/images/bands/mamber/daniel-platzman.jpg",
       },
     ],
   },
@@ -54,10 +59,12 @@ export const bands: Band[] = [
       {
         name: "Eddie Anthony",
         role: "Vocal / Guitar",
+        image: "/images/bands/mamber/eddie-anthony.jpg",
       },
       {
         name: "Edan Dover",
         role: "Keyboard / Producer",
+        image: "/images/bands/mamber/edan-dover.jpg",
       },
     ],
   },

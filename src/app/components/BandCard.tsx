@@ -9,7 +9,7 @@ export default function BandCard({ band }: Props) {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
       
-      <Image //ช้สำหรับแสดงรูปภาพ
+      <Image
         src={band.image}
         alt={band.name}
         width={500}
@@ -35,18 +35,35 @@ export default function BandCard({ band }: Props) {
         </h3>
 
         <div className="space-y-2">
-          {band.members.map((member) => ( //แสดงสมาชิก
+          {band.members.map((member) => (
             <div
               key={member.name}
-              className="bg-gray-100 rounded-lg p-3"
+              className="bg-gray-100 rounded-lg p-3 flex items-center gap-3"
             >
-              <p className="font-semibold">
-                {member.name}
-              </p>
+              {/* แสดงรูปสมาชิก ถ้ามีรูปจะดึงมาแสดง ถ้าไม่มีจะแสดงกล่องสีเทาแทน */}
+              {member.image ? (
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  width={48}
+                  height={48}
+                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                />
+              ) : (
+                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 font-bold flex-shrink-0">
+                  {member.name.charAt(0)}
+                </div>
+              )}
 
-              <p className="text-sm text-gray-500">
-                {member.role}
-              </p>
+              <div>
+                <p className="font-semibold">
+                  {member.name}
+                </p>
+
+                <p className="text-sm text-gray-500">
+                  {member.role}
+                </p>
+              </div>
             </div>
           ))}
         </div>
