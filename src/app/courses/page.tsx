@@ -1,3 +1,4 @@
+"use client"
 import { course } from "@/app/data/coursedata";
 import CourseExplorer from "../components/CourseExplorer";
 

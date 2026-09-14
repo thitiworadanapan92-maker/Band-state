@@ -1,3 +1,4 @@
+"use client";
 import CourseForm from "@/app/components/CourseForm";
 
 export default function TestPage() {
