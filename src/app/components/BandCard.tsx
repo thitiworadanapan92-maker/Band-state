@@ -1,73 +1,135 @@
-import Image from "next/image"
-import { Band } from "../types/band"
+"use client";
 
-type Props = {
-  band: Band
-}
+import { useState } from "react";
+import { Band } from "../types/band";
 
-export default function BandCard({ band }: Props) {
+type BandCardProps = {
+  band: Band;
+  isFollowed: boolean;
+  onFollow: () => void;
+};
+
+export default function BandCard({
+  band,
+  isFollowed,
+  onFollow,
+}: BandCardProps) {
+  // เก็บจำนวน Like
+  const [likes, setLikes] = useState(0);
+
+  // เก็บสถานะ Like
+  const [isLiked, setIsLiked] = useState(false);
+
+  // กด Like
+  const handleLike = () => {
+    setIsLiked((prev) => !prev);
+
+    setLikes((prev) =>
+      isLiked ? prev - 1 : prev + 1
+    );
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-      
-      <Image
+    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+
+      {/* รูปวง */}
+      <img
         src={band.image}
         alt={band.name}
-        width={500}
-        height={300}
-        className="w-full h-60 object-cover"
+        className="w-full h-56 object-cover"
       />
 
       <div className="p-5">
+
+        {/* ชื่อวง */}
         <h2 className="text-2xl font-bold mb-2">
           {band.name}
         </h2>
 
-        <p className="text-purple-600 font-semibold mb-3">
-          {band.genre}
+        {/* แนวเพลง */}
+        <p className="text-gray-600 mb-2">
+          🎸 {band.genre}
         </p>
 
-        <p className="text-gray-600 mb-5">
+        {/* คำอธิบาย */}
+        <p className="text-gray-600 mb-4">
           {band.description}
         </p>
 
-        <h3 className="text-lg font-bold mb-3">
-          สมาชิกวง
-        </h3>
+        {/* สมาชิกวง */}
+        <div className="mb-5">
 
-        <div className="space-y-2">
-          {band.members.map((member) => (
-            <div
-              key={member.name}
-              className="bg-gray-100 rounded-lg p-3 flex items-center gap-3"
-            >
-              {/* แสดงรูปสมาชิก ถ้ามีรูปจะดึงมาแสดง ถ้าไม่มีจะแสดงกล่องสีเทาแทน */}
-              {member.image ? (
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 rounded-full object-cover flex-shrink-0"
-                />
-              ) : (
-                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 font-bold flex-shrink-0">
-                  {member.name.charAt(0)}
+          {/* แสดงจำนวนสมาชิกจากข้อมูลที่มีอยู่แล้ว */}
+          <h3 className="font-bold text-lg mb-3">
+            👥 สมาชิกวง ({band.members.length} คน)
+          </h3>
+
+          <div className="space-y-3">
+
+            {band.members.map((member) => (
+              <div
+                key={member.name}
+                className="flex items-center gap-3"
+              >
+
+                {/* รูปสมาชิก */}
+                {member.image && (
+                  <img
+                    src={member.image}
+                    alt={member.name}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                )}
+
+                {/* ข้อมูลสมาชิก */}
+                <div>
+                  <p className="font-semibold">
+                    {member.name}
+                  </p>
+
+                  <p className="text-sm text-gray-500">
+                    {member.role}
+                  </p>
                 </div>
-              )}
 
-              <div>
-                <p className="font-semibold">
-                  {member.name}
-                </p>
-
-                <p className="text-sm text-gray-500">
-                  {member.role}
-                </p>
               </div>
-            </div>
-          ))}
+            ))}
+
+          </div>
         </div>
+
+        {/* ปุ่ม Follow + Like */}
+        <div className="flex gap-2">
+
+          {/* Follow */}
+          <button
+            onClick={onFollow}
+            className={`flex-1 px-4 py-2 rounded-lg font-semibold ${
+              isFollowed
+                ? "bg-gray-300 text-gray-700"
+                : "bg-blue-500 text-white"
+            }`}
+          >
+            {isFollowed
+              ? "✓ เลิกติดตาม"
+              : "+ ติดตาม"}
+          </button>
+
+          {/* Like */}
+          <button
+            onClick={handleLike}
+            className={`px-4 py-2 rounded-lg ${
+              isLiked
+                ? "bg-red-100 text-red-600"
+                : "bg-gray-100 text-gray-700"
+            }`}
+          >
+            {isLiked ? "❤️" : "♡"} {likes}
+          </button>
+
+        </div>
+
       </div>
     </div>
-  )
+  );
 }
